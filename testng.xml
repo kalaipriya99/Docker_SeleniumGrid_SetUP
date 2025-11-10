@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Docker Selenium Grid Suite" parallel="tests" thread-count="2">
+    <test name="Google Chrome Tests">
+        <classes>
+            <class name="tests.GoogleTest"/>
+        </classes>
+    </test>
+</suite>
