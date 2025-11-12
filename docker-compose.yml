@@ -13,7 +13,7 @@ services:
   chrome:
     image: selenium/node-chrome:4.24.0
     container_name: selenium-chrome
-    shm_size: 1gb
+    shm_size: 3gb
     depends_on:
       - selenium-hub
     environment:
@@ -24,7 +24,7 @@ services:
       - SE_NODE_SESSION_TIMEOUT=300
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
       - SE_NODE_GRID_URL=http://selenium-hub:4444
-      - SE_NODE_BROWSER_ARGS=--no-sandbox --disable-dev-shm-usage --disable-gpu
+      - SE_NODE_BROWSER_ARGS=--no-sandbox --disable-dev-shm-usage --disable-gpu --start-maximized --window-size=1920,1080
     networks:
       - pipeline_automation_grid
     ports:

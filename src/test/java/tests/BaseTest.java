@@ -28,14 +28,17 @@ public class BaseTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
-        options.addArguments("--start-maximized");   
+        options.addArguments("--start-maximized");
+        options.addArguments("--window-size=1920,1080");   
         //options.addArguments("--headless=new"); // important for Docker
         options.addArguments("--remote-debugging-port=9222"); // helps DevToolsActivePort issue
         options.setPageLoadTimeout(Duration.ofSeconds(60)); // avoid long hangs on slow pages
         options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
         driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
         // Implicit wait (optional)
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(120));
+        driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(60));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         ExtentManager.createTest(getClass().getSimpleName());
         ExtentManager.getTest().log(Status.INFO, "Driver initialized for " + getClass().getSimpleName());
     }
