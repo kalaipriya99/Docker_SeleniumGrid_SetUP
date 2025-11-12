@@ -42,7 +42,7 @@ services:
       - ./src:/app/src
       - ./pom.xml:/app/pom.xml
       - ./reports:/app/reports
-      - .:/app 
+      - ./target:/app/target 
     environment:
       - MAVEN_OPTS=-Xmx512m
     command: >
