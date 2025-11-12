@@ -28,7 +28,8 @@ public class BaseTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
-        options.addArguments("--headless=new"); // important for Docker
+        options.addArguments("--start-maximized");   
+        //options.addArguments("--headless=new"); // important for Docker
         options.addArguments("--remote-debugging-port=9222"); // helps DevToolsActivePort issue
         options.setPageLoadTimeout(Duration.ofSeconds(60)); // avoid long hangs on slow pages
         options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
