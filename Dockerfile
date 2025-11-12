@@ -9,5 +9,6 @@ COPY pom.xml /app/pom.xml
 COPY testng.xml /app/testng.xml
 COPY src /app/src
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh \
+    && chmod +x /entrypoint.sh
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
