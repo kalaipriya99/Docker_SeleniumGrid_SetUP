@@ -9,6 +9,5 @@ COPY pom.xml /app/pom.xml
 COPY testng.xml /app/testng.xml
 COPY src /app/src
 COPY entrypoint.sh /entrypoint.sh
-
-# Use bash entrypoint
+RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
