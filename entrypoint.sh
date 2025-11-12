@@ -11,7 +11,7 @@ if [ -d "/app/target" ]; then
     rm -rf /app/target || true
 fi
 
-# Run Maven with reports going to /app/reports
+# Run Maven with reports going to /app/reports folder
 mvn clean test -Dextent.output.dir=/app/reports
 
 echo "=============================="
