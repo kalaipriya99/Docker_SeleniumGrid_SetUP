@@ -10,7 +10,8 @@ public class ExtentManager {
 
     public static synchronized ExtentReports getInstance() {
         if (extent == null) {
-            ExtentSparkReporter spark = new ExtentSparkReporter("target/extent-report/extent.html");
+           String reportDir = System.getProperty("user.dir") + "/reports"; // works in local & Docker
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportDir + "/extent.html");
             spark.config().setDocumentTitle("Selenium Grid - Extent Report");
             spark.config().setReportName("Automation Results");
             extent = new ExtentReports();
