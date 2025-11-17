@@ -2,9 +2,12 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+
 import utils.ExtentManager;
 import com.aventstack.extentreports.Status;
 import java.net.URL;
@@ -14,9 +17,9 @@ import java.net.URI;
 public class BaseTest {
     protected WebDriver driver;
 
-    
+    @Parameters({"platformName"})
 	@BeforeClass
-    public void setUp() throws Exception {
+    public void setUp(String platformName) throws Exception {
   // Use environment variable if inside Docker, otherwise fallback to localhost
         String hubUrl = System.getenv("HUB_URL");
 
@@ -24,6 +27,7 @@ public class BaseTest {
             // Default to Docker network hostname
             hubUrl = "http://selenium-hub:4444/";
         }
+        if(platformName.equalsIgnoreCase("chrome")) {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
@@ -35,6 +39,23 @@ public class BaseTest {
         options.setPageLoadTimeout(Duration.ofSeconds(60)); // avoid long hangs on slow pages
         options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
         driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
+        }
+        else if(platformName.equalsIgnoreCase("firefox")) {
+			FirefoxOptions options = new FirefoxOptions();
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--disable-gpu");
+			options.addArguments("--start-maximized");
+			options.addArguments("--window-size=1920,1080");   
+			//options.addArguments("--headless=new"); // important for Docker
+			options.addArguments("--remote-debugging-port=9222"); // helps DevToolsActivePort issue
+			options.setPageLoadTimeout(Duration.ofSeconds(60)); // avoid long hangs on slow pages
+			options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
+			driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
+		}
+		else {
+			throw new IllegalArgumentException("Unsupported platform: " + platformName);
+		}
         // Implicit wait (optional)
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(120));
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(60));
