@@ -41,7 +41,7 @@ services:
       - ./pom.xml:/app/pom.xml
       - ./reports:/app/reports
       - ./target:/app/target 
-	  - ./screenshots:/app/screenshots
+      - ./screenshots:/app/screenshots
     environment:
       - MAVEN_OPTS=-Xmx512m
     command: >
