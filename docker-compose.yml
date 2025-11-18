@@ -24,7 +24,7 @@ services:
       - SE_NODE_SESSION_TIMEOUT=300
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
       - SE_NODE_GRID_URL=http://selenium-hub:4444
-      - SE_NODE_BROWSER_ARGS=--no-sandbox --disable-dev-shm-usage --start-maximized --window-size=1920,1080
+      - SE_NODE_BROWSER_ARGS=--no-sandbox --disable-dev-shm-usage --disable-gpu --headless=new --remote-debugging-port=9222
     networks:
       - pipeline_automation_grid
     ports:
