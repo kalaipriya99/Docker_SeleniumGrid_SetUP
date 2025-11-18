@@ -40,19 +40,19 @@ public class BaseTest {
         options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
         driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
         }
-        else if(platformName.equalsIgnoreCase("firefox")) {
-			FirefoxOptions options = new FirefoxOptions();
-			options.addArguments("--no-sandbox");
-			options.addArguments("--disable-dev-shm-usage");
+//        else if(platformName.equalsIgnoreCase("firefox")) {
+//			FirefoxOptions options = new FirefoxOptions();
+//			options.addArguments("--no-sandbox");
+//			options.addArguments("--disable-dev-shm-usage");
 //			options.addArguments("--disable-gpu");
-			options.addArguments("--start-maximized");
+//			options.addArguments("--start-maximized");
 //			options.addArguments("--window-size=1920,1080");   
 			//options.addArguments("--headless=new"); // important for Docker
 //			options.addArguments("--remote-debugging-port=9222"); // helps DevToolsActivePort issue
-			options.setPageLoadTimeout(Duration.ofSeconds(60)); // avoid long hangs on slow pages
-			options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
-			driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
-		}
+//			options.setPageLoadTimeout(Duration.ofSeconds(60)); // avoid long hangs on slow pages
+//			options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
+//			driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
+//		}
 		else {
 			throw new IllegalArgumentException("Unsupported platform: " + platformName);
 		}
