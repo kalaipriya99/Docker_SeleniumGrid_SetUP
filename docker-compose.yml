@@ -44,12 +44,16 @@ services:
       - ./screenshots:/app/screenshots
     environment:
       - MAVEN_OPTS=-Xmx512m
-    command: >
-      /bin/bash -c "
-      echo 'Waiting for Selenium Grid to be ready...';
-      sleep 30;
-      mvn clean test -Dextent.output.dir=/app/reports
-      "
+       command: >
+        /bin/bash -c "
+         echo 'Waiting for Selenium Grid...';
+         while ! curl -s http://selenium-hub:4444/status | grep 'ready' > /dev/null; do
+         echo 'Hub not ready yet...';
+         sleep 5;
+         done;
+         echo 'Hub is ready. Starting tests.';
+         mvn clean test -Dextent.output.dir=/app/reports
+        "
 
 networks:
   pipeline_automation_grid:

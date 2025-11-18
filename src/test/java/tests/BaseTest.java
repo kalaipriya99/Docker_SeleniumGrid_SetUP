@@ -25,7 +25,7 @@ public class BaseTest {
 
         if (hubUrl == null || hubUrl.isEmpty()) {
             // Default to Docker network hostname
-            hubUrl = "http://selenium-hub:4444/wd/hub";
+            hubUrl = "http://selenium-hub:4444/";
         }
         if(platformName.equalsIgnoreCase("chrome")) {
         ChromeOptions options = new ChromeOptions();
