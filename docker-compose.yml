@@ -28,7 +28,7 @@ services:
     networks:
       - pipeline_automation_grid
     ports:
-      - "7900:7900"
+      - "5901:5900"   # VNC port
 
 
   firefox:
@@ -48,7 +48,7 @@ services:
     networks:
       - pipeline_automation_grid
     ports:
-      - "7901:7900"
+      - "5902:5900"   # VNC port
   
   tests:
     build: .
