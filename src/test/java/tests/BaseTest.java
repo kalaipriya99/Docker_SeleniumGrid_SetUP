@@ -25,19 +25,18 @@ public class BaseTest {
 
         if (hubUrl == null || hubUrl.isEmpty()) {
             // Default to Docker network hostname
-            hubUrl = "http://selenium-hub:4444/";
+            hubUrl = "http://selenium-hub:4444/wd/hub";
         }
         if(platformName.equalsIgnoreCase("chrome")) {
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-//        options.addArguments("--start-maximized");
-//        options.addArguments("--window-size=1920,1080");   
-        options.addArguments("--headless=new"); // important for Docker
-        options.addArguments("--remote-debugging-port=9222"); // helps DevToolsActivePort issue
-        options.setPageLoadTimeout(Duration.ofSeconds(60)); // avoid long hangs on slow pages
-        options.setScriptTimeout(Duration.ofSeconds(30));   // script execution timeout
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--remote-allow-origins=*");
+        options.setPageLoadTimeout(Duration.ofSeconds(60));
+        options.setScriptTimeout(Duration.ofSeconds(30));  // script execution timeout
         driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
         }
 //        else if(platformName.equalsIgnoreCase("firefox")) {

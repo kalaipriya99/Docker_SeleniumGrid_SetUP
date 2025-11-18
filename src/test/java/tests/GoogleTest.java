@@ -1,9 +1,7 @@
 package tests;
 
 import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -24,15 +22,17 @@ public class GoogleTest extends BaseTest {
         ExtentManager.getTest().log(Status.INFO, "Page title: " + title);
         Assert.assertTrue(title.toLowerCase().contains("google"));
         ExtentManager.getTest().log(Status.PASS, "Google title verified successfully");
-        driver.findElement(By.xpath("//*[@id=\"input\"]")).sendKeys("Selenium WebDriver");
+        driver.findElement(By.name("q")).sendKeys("Selenium WebDriver");
         screenshotPath = Utils.takeScreenshot(driver, "GoogleTitleTest");
         ExtentManager.getTest().log(Status.INFO, "Entered text in search box");
         ExtentManager.getTest().addScreenCaptureFromPath(screenshotPath, "Entered text in search box");
-        Robot r= new Robot();
-        r.keyPress(KeyEvent.VK_ENTER);
-        r.keyRelease(KeyEvent.VK_ENTER);
+        driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
         ExtentManager.getTest().log(Status.INFO, "Pressed Enter key");
         Thread.sleep(3000); // Wait for results to load
+        screenshotPath = Utils.takeScreenshot(driver, "GoogleSearchResult");
+        ExtentManager.getTest().log(Status.INFO, "Google search result");
+        ExtentManager.getTest().addScreenCaptureFromPath(screenshotPath, "Google search result");
+        
         
     }
 
