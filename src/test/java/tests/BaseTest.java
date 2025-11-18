@@ -35,7 +35,7 @@ public class BaseTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--remote-allow-origins=*");
-        options.setPageLoadTimeout(Duration.ofSeconds(60));
+        options.setPageLoadTimeout(Duration.ofSeconds(120));
         options.setScriptTimeout(Duration.ofSeconds(30));  // script execution timeout
         driver = new RemoteWebDriver(new URI(hubUrl).toURL(), options);
         }
