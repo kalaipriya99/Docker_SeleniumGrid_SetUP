@@ -55,7 +55,7 @@ public class BaseTest {
 			throw new IllegalArgumentException("Unsupported platform: " + platformName);
 		}
         // Implicit wait (optional)
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(120));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofMinutes(5));
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(60));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         ExtentManager.createTest(getClass().getSimpleName());
