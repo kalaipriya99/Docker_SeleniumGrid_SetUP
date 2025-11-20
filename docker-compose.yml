@@ -18,6 +18,8 @@ services:
       - selenium-hub
     networks:
       - pipeline_automation_grid
+    volumes:
+      - /dev/shm:/dev/shm
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -36,6 +38,8 @@ services:
       - selenium-hub
     networks:
       - pipeline_automation_grid
+    volumes:
+      - /dev/shm:/dev/shm
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
@@ -45,7 +49,7 @@ services:
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
       - SE_NODE_GRID_URL=http://selenium-hub:4444
       - MOZ_HEADLESS=1
-      - SE_NODE_BROWSER_ARGS=--headless --width=1920 --height=1080
+      - SE_NODE_BROWSER_ARGS=--headless --width=1920 --height=1080 --disable-gpu --no-sandbox
 
   tests:
     build: .

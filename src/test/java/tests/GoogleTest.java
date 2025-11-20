@@ -42,7 +42,7 @@ public class GoogleTest extends BaseTest {
         driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
         ExtentManager.getTest().log(Status.INFO, "Pressed Enter key");
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(40));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("search"))); // Wait for search results container
 
         screenshotPath = Utils.takeScreenshot(driver, "GoogleSearchResult");
