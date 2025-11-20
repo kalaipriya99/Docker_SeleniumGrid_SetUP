@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   selenium-hub:
     image: selenium/hub:4.24.0
@@ -7,53 +9,39 @@ services:
     networks:
       - pipeline_automation_grid
     environment:
-      - GRID_MAX_SESSION=1
+      - GRID_MAX_SESSION=5
       - GRID_BROWSER_TIMEOUT=300
+      - GRID_TIMEOUT=300
 
   chrome:
     image: selenium/node-chrome:4.24.0
     container_name: selenium-chrome
-    shm_size: "2gb"
     depends_on:
       - selenium-hub
+    shm_size: 2g
     environment:
       - SE_EVENT_BUS_HOST=selenium-hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - SE_NODE_MAX_SESSIONS=1
-      - SE_NODE_SESSION_TIMEOUT=300
+      - SE_NODE_MAX_SESSIONS=5
       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
-      - SE_NODE_GRID_URL=http://selenium-hub:4444
-      - SE_NODE_BROWSER_ARGS=--headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-software-rasterizer --remote-debugging-port=9222
     networks:
       - pipeline_automation_grid
 
-  tests:
-    build: .
-    container_name: selenium-tests
+  firefox:
+    image: selenium/node-firefox:4.24.0
+    container_name: selenium-firefox
     depends_on:
       - selenium-hub
-      - chrome
+    shm_size: 2g
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=5
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
     networks:
       - pipeline_automation_grid
-    volumes:
-      - ./src:/app/src
-      - ./pom.xml:/app/pom.xml
-      - ./reports:/app/reports
-      - ./target:/app/target
-      - ./screenshots:/app/screenshots
-    environment:
-      - MAVEN_OPTS=-Xmx512m
-    command: >
-      /bin/bash -c "
-      echo 'Waiting for Selenium Grid...';
-      while ! curl -s http://selenium-hub:4444/status | grep 'ready' > /dev/null; do
-        echo 'Hub not ready yet...';
-        sleep 5;
-      done;
-      echo 'Hub is ready. Starting tests.';
-      mvn clean test -Dextent.output.dir=/app/reports
-      "
 
 networks:
   pipeline_automation_grid:
