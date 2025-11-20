@@ -46,7 +46,7 @@ public class BaseTest {
         // Global waits
         driver.manage().timeouts().pageLoadTimeout(Duration.ofMinutes(5));
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(60));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
 
         // Extent Reports
         ExtentManager.createTest(getClass().getSimpleName());

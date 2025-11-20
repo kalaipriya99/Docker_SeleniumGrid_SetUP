@@ -61,7 +61,7 @@ services:
       echo 'All nodes ready. Starting Maven tests...';
       mvn clean test -Dextent.output.dir=/app/reports
       "
-
 networks:
   pipeline_automation_grid:
+    name: pipeline_automation_grid
     driver: bridge
