@@ -7,7 +7,7 @@ services:
     networks:
       - pipeline_automation_grid
     environment:
-      - GRID_MAX_SESSION=2
+      - GRID_MAX_SESSION=1
       - GRID_BROWSER_TIMEOUT=300
 
   chrome:
@@ -30,34 +30,12 @@ services:
       - SE_NODE_GRID_URL=http://selenium-hub:4444
       - SE_NODE_BROWSER_ARGS=--headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-software-rasterizer --disable-features=VizDisplayCompositor --remote-allow-origins=* --window-size=1920,1080
 
-  firefox:
-    image: selenium/node-firefox:4.24.0
-    container_name: selenium-firefox
-    shm_size: 2g
-    depends_on:
-      - selenium-hub
-    networks:
-      - pipeline_automation_grid
-    volumes:
-      - /dev/shm:/dev/shm
-    environment:
-      - SE_EVENT_BUS_HOST=selenium-hub
-      - SE_EVENT_BUS_PUBLISH_PORT=4442
-      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-      - SE_NODE_MAX_SESSIONS=1
-      - SE_NODE_SESSION_TIMEOUT=300
-      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
-      - SE_NODE_GRID_URL=http://selenium-hub:4444
-      - MOZ_HEADLESS=1
-      - SE_NODE_BROWSER_ARGS=--headless --width=1920 --height=1080 --disable-gpu --no-sandbox
-
   tests:
     build: .
     container_name: selenium-tests
     depends_on:
       - selenium-hub
       - chrome
-      - firefox
     networks:
       - pipeline_automation_grid
     volumes:
@@ -78,10 +56,6 @@ services:
       done;
       echo 'Waiting for Chrome Node...';
       until curl -s http://selenium-hub:4444/ui/ | grep -q 'chrome'; do
-        sleep 3;
-      done;
-      echo 'Waiting for Firefox Node...';
-      until curl -s http://selenium-hub:4444/ui/ | grep -q 'firefox'; do
         sleep 3;
       done;
       echo 'All nodes ready. Starting Maven tests...';

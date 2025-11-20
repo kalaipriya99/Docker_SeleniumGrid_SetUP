@@ -39,18 +39,7 @@ public class BaseTest {
 
             driver = new RemoteWebDriver(new URL(hubUrl), chromeOptions);
 
-        } else if (platformName.equalsIgnoreCase("firefox")) {
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.addArguments("--headless");
-            firefoxOptions.addArguments("--no-sandbox");
-            firefoxOptions.addArguments("--disable-dev-shm-usage");
-            firefoxOptions.addArguments("--start-maximized");
-            firefoxOptions.setPageLoadTimeout(Duration.ofSeconds(120));
-            firefoxOptions.setScriptTimeout(Duration.ofSeconds(30));
-
-            driver = new RemoteWebDriver(new URL(hubUrl), firefoxOptions);
-
-        } else {
+        }  else {
             throw new IllegalArgumentException("Unsupported platform: " + platformName);
         }
 
