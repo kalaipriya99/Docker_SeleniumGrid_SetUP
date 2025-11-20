@@ -20,7 +20,7 @@ public class BaseTest {
     @Parameters({"platformName"})
     @BeforeClass
     public void setUp(String platformName) throws Exception {
-        // Hub URL: Docker network or fallback
+        // Hub URL: Docker network
         String hubUrl = System.getenv("HUB_URL");
         if (hubUrl == null || hubUrl.isEmpty()) {
             hubUrl = "http://selenium-hub:4444/wd/hub";
@@ -35,7 +35,7 @@ public class BaseTest {
             chromeOptions.addArguments("--window-size=1920,1080");
             chromeOptions.addArguments("--remote-allow-origins=*");
             chromeOptions.setPageLoadTimeout(Duration.ofSeconds(120));
-            chromeOptions.setScriptTimeout(Duration.ofSeconds(60));
+            chromeOptions.setScriptTimeout(Duration.ofSeconds(30));
 
             driver = new RemoteWebDriver(new URL(hubUrl), chromeOptions);
 
@@ -44,10 +44,9 @@ public class BaseTest {
             firefoxOptions.addArguments("--headless");
             firefoxOptions.addArguments("--no-sandbox");
             firefoxOptions.addArguments("--disable-dev-shm-usage");
-            firefoxOptions.addArguments("--width=1920");
-            firefoxOptions.addArguments("--height=1080");
+            firefoxOptions.addArguments("--start-maximized");
             firefoxOptions.setPageLoadTimeout(Duration.ofSeconds(120));
-            firefoxOptions.setScriptTimeout(Duration.ofSeconds(60));
+            firefoxOptions.setScriptTimeout(Duration.ofSeconds(30));
 
             driver = new RemoteWebDriver(new URL(hubUrl), firefoxOptions);
 
@@ -55,14 +54,14 @@ public class BaseTest {
             throw new IllegalArgumentException("Unsupported platform: " + platformName);
         }
 
-        // Optional global waits
+        // Global waits
         driver.manage().timeouts().pageLoadTimeout(Duration.ofMinutes(5));
         driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(60));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 
-        // Extent Reports initialization
+        // Extent Reports
         ExtentManager.createTest(getClass().getSimpleName());
-        ExtentManager.getTest().log(Status.INFO, "Driver initialized for " + getClass().getSimpleName());
+        ExtentManager.getTest().log(Status.INFO, "Driver initialized for " + platformName);
     }
 
     @AfterClass
