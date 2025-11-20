@@ -23,7 +23,7 @@ public class BaseTest {
         // Hub URL: Docker network
         String hubUrl = System.getenv("HUB_URL");
         if (hubUrl == null || hubUrl.isEmpty()) {
-            hubUrl = "http://selenium-hub:4444/wd/hub";
+            hubUrl = "http://selenium-hub:4444/";
         }
 
         if (platformName.equalsIgnoreCase("chrome")) {
