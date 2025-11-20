@@ -23,7 +23,7 @@ public class BaseTest {
         // Hub URL: Docker network or fallback
         String hubUrl = System.getenv("HUB_URL");
         if (hubUrl == null || hubUrl.isEmpty()) {
-            hubUrl = "http://selenium-hub:4444/";
+            hubUrl = "http://selenium-hub:4444/wd/hub";
         }
 
         if (platformName.equalsIgnoreCase("chrome")) {
@@ -35,7 +35,7 @@ public class BaseTest {
             chromeOptions.addArguments("--window-size=1920,1080");
             chromeOptions.addArguments("--remote-allow-origins=*");
             chromeOptions.setPageLoadTimeout(Duration.ofSeconds(120));
-            chromeOptions.setScriptTimeout(Duration.ofSeconds(30));
+            chromeOptions.setScriptTimeout(Duration.ofSeconds(60));
 
             driver = new RemoteWebDriver(new URL(hubUrl), chromeOptions);
 
@@ -44,9 +44,10 @@ public class BaseTest {
             firefoxOptions.addArguments("--headless");
             firefoxOptions.addArguments("--no-sandbox");
             firefoxOptions.addArguments("--disable-dev-shm-usage");
-            firefoxOptions.addArguments("--start-maximized");
+            firefoxOptions.addArguments("--width=1920");
+            firefoxOptions.addArguments("--height=1080");
             firefoxOptions.setPageLoadTimeout(Duration.ofSeconds(120));
-            firefoxOptions.setScriptTimeout(Duration.ofSeconds(30));
+            firefoxOptions.setScriptTimeout(Duration.ofSeconds(60));
 
             driver = new RemoteWebDriver(new URL(hubUrl), firefoxOptions);
 
