@@ -11,6 +11,7 @@ import org.testng.annotations.Parameters;
 import utils.ExtentManager;
 import com.aventstack.extentreports.Status;
 
+import java.net.URI;
 import java.net.URL;
 import java.time.Duration;
 
@@ -37,7 +38,7 @@ public class BaseTest {
             chromeOptions.setPageLoadTimeout(Duration.ofSeconds(120));
             chromeOptions.setScriptTimeout(Duration.ofSeconds(30));
 
-            driver = new RemoteWebDriver(new URL(hubUrl), chromeOptions);
+            driver = new RemoteWebDriver((new URI(hubUrl).toURL()), chromeOptions);
 
         }  else {
             throw new IllegalArgumentException("Unsupported platform: " + platformName);
